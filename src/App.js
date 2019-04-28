@@ -14,12 +14,19 @@ export default class App extends Component {
 
 
   handleClick(event) {
+    if(this.state.equalsFlag){
+      this.setState({
+        value: '',
+        primaryValue: '',
+        equalsFlag: false
+      })
+    }
     if(event.target.value === "+" || event.target.value === "-" || event.target.value === "*" || event.target.value === "/"){
-      console.log('operator')
       const primaryValue = parseInt(this.state.value)
       this.setState({
         primaryValue,
-        clearFlag: true
+        clearFlag: true,
+        operation: event.target.value
       })
     }
     else{
@@ -32,9 +39,29 @@ export default class App extends Component {
       else{
         if(event.target.value === "="){
           const secondaryValue = parseInt(this.state.value)
+          if(this.state.operation === "+"){
+            this.setState({
+              value: this.state.primaryValue+secondaryValue
+            })
+          }
+          if(this.state.operation === "-"){
+            this.setState({
+              value: this.state.primaryValue-secondaryValue
+            })
+          }
+          if(this.state.operation === "*"){
+            this.setState({
+              value: this.state.primaryValue*secondaryValue
+            })
+          }
+          if(this.state.operation === "/"){
+            this.setState({
+              value: this.state.primaryValue/secondaryValue
+            })
+          }
           this.setState({
-            value: this.state.primaryValue + secondaryValue,
             primaryValue: '',
+            equalsFlag: true
           })
         }
         else{
