@@ -16,10 +16,11 @@ export default class App extends Component {
   handleClick(event) {
     if(this.state.equalsFlag){
       this.setState({
-        value: '',
+        value: event.target.value,
         primaryValue: '',
         equalsFlag: false
       })
+      return
     }
     if(event.target.value === "+" || event.target.value === "-" || event.target.value === "*" || event.target.value === "/"){
       const primaryValue = parseInt(this.state.value)
