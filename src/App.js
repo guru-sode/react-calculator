@@ -14,20 +14,36 @@ export default class App extends Component {
 
 
   handleClick(event) {
-    if(event.target.value === "+" || "-" || "*" || "/"){
+    if(event.target.value === "+" || event.target.value === "-" || event.target.value === "*" || event.target.value === "/"){
       console.log('operator')
       const primaryValue = parseInt(this.state.value)
       this.setState({
         primaryValue,
-        value:''
+        clearFlag: true
       })
     }
-    if(event.target.value !== "+" || "-" || "*" || "/"){
-      console.log(this.state.value)
-      const value = this.state.value+event.target.value 
-      this.setState({
-        value
-      })
+    else{
+      if(this.state.clearFlag){
+        this.setState({
+          clearFlag: false,
+          value: event.target.value
+        })
+      }
+      else{
+        if(event.target.value === "="){
+          const secondaryValue = parseInt(this.state.value)
+          this.setState({
+            value: this.state.primaryValue + secondaryValue,
+            primaryValue: '',
+          })
+        }
+        else{
+          const value = this.state.value+event.target.value 
+          this.setState({
+            value
+          })
+        }
+      }
     } 
   }
 
