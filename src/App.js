@@ -6,40 +6,29 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      primaryValue: '',
-      secondaryValue: '',
-      displayFlag: true
+      value:'',
     };
 
     this.handleClick = this.handleClick.bind(this)
   }
 
-  setValue(event){
-    console.log(this.state.displayFlag)
-    if(this.state.displayFlag === true){
-      const value = this.state.primaryValue+event.target.value 
-      this.setState({
-        primaryValue: value
-      })
-    }
-
-    if(this.state.displayFlag === false){
-      const value = this.state.secondaryValue+event.target.value 
-      this.setState({
-        secondaryValue: value
-      })
-    } 
-  }
 
   handleClick(event) {
     if(event.target.value === "+" || "-" || "*" || "/"){
+      console.log('operator')
+      const primaryValue = parseInt(this.state.value)
       this.setState({
-        displayFlag: false
+        primaryValue,
+        value:''
       })
-      const primary = parseInt(this.state.primaryValue)
     }
-
-    setTimeout(this.setValue(event),300)  
+    if(event.target.value !== "+" || "-" || "*" || "/"){
+      console.log(this.state.value)
+      const value = this.state.value+event.target.value 
+      this.setState({
+        value
+      })
+    } 
   }
 
   render() {
@@ -50,7 +39,7 @@ export default class App extends Component {
             <div className="col-md-6">
               <form>
                 <div className="form-group">
-                  <input disabled className="form-control" id="display" value={this.state.displayFlag === true ? this.state.primaryValue : this.state.secondaryValue}/>
+                  <input disabled className="form-control" id="display" value={this.state.value}/>
                 </div>
               </form>
             </div>
